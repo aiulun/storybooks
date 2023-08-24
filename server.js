@@ -22,13 +22,29 @@ connectDB();
 
 const app = express();
 
+// Body Parser
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
 // Logging
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
+// Handlebar Helpers
+const { formatDate } = require("./helpers/hbs");
+
 // Handlebars
-app.engine(".hbs", exphbs.engine({ defaultLayout: "main", extname: ".hbs" }));
+app.engine(
+  ".hbs",
+  exphbs.engine({
+    helpers: {
+      formatDate,
+    },
+    defaultLayout: "main",
+    extname: ".hbs",
+  })
+);
 app.set("view engine", ".hbs");
 
 // Sessions
