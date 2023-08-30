@@ -54,10 +54,9 @@ router.get("/edit/:id", ensureAuth, async (req, res) => {
   if (story.user != req.user.id) {
     res.redirect("/stories");
   } else {
-    res.render("stories/edit"),
-      {
-        story,
-      };
+    res.render("stories/edit", {
+      story,
+    });
   }
 });
 
